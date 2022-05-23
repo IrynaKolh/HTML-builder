@@ -5,7 +5,7 @@ const file = path.join(__dirname, 'destination.txt');
 const writableStream  = fs.createWriteStream(file);
 
 
-process.stdout.write('What is your name? ');
+process.stdout.write('Do you know song about aligator?');
 process.on('SIGINT', () => {  
   process.stdout.write('See you later, Aligator!');
   process.exit();
