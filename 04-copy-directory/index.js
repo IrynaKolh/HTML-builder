@@ -4,7 +4,7 @@ const path = require('path');
 const destinationWay = path.join(__dirname, 'files-copy');
 const sourceWay = path.join(__dirname, 'files');
 
-fs.rm(destinationWay, {recursive: true}, () => {
+fs.rm(destinationWay, {recursive: true, forse: true}, () => {
   fs.mkdir(destinationWay, {recursive: true}, () => {
     fs.readdir(sourceWay, (err) => {
       if (err) {
