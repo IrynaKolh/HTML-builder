@@ -1,22 +1,31 @@
 const fs = require('fs');
 const path = require('path');
 
-const copyFiles = path.join(__dirname, 'files-copy');
-const sourseFiles = path.join(__dirname, 'files');
+const destinationWay = path.join(__dirname, 'files-copy');
+const sourceWay = path.join(__dirname, 'files');
 
-fs.rm(copyFiles, {recursive: true}, () => {
-  fs.mkdir(copyFiles, {recursive: true}, () => {
-    fs.readdir(sourseFiles, (err, files) => {
+fs.rm(destinationWay, {recursive: true}, () => {
+  fs.mkdir(destinationWay, {recursive: true}, () => {
+    fs.readdir(sourceWay, (err) => {
       if (err) {
         console.log(err);
-      } else {
-        files.forEach(file => {
-          if(file.isFile()) {
-            fs.copyFile((sourseFiles, file.name), (copyFiles, file.name), () => {});
-          }
-        });
-      }
-      
+      } else {        
+        copyFiles();              
+      }      
     });
   });
-});
+}); 
+
+function copyFiles() {
+  fs.readdir(sourceWay, { withFileTypes: true }, (err, files) => {
+    if (err) {
+      console.error(err);
+    } else {
+      files.forEach((file) => {
+        let sourceFile = path.join(sourceWay, file.name);
+        let copyFile = path.join(destinationWay, file.name);  
+        fs.copyFile(sourceFile, copyFile, () => {});        
+      });
+    }
+  });
+}
